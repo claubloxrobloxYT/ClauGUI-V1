@@ -1,0 +1,75 @@
+-- Gui to Lua
+-- Version 3.2
+
+-- Instances
+
+local ScreenGui = Instance.new(ScreenGui)
+local MAINGUI = Instance.new(Frame)
+local Label = Instance.new(TextLabel)
+local NOCLIP = Instance.new(TextButton)
+
+--Properties
+
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+MAINGUI.Name = MAINGUI
+MAINGUI.Parent = ScreenGui
+MAINGUI.BackgroundColor3 = Color3.fromRGB(13, 171, 4)
+MAINGUI.Position = UDim2.new(0, 0, 0.609448791, 0)
+MAINGUI.Size = UDim2.new(0, 501, 0, 248)
+
+Label.Name = Label
+Label.Parent = ScreenGui
+Label.BackgroundColor3 = Color3.fromRGB(11, 159, 8)
+Label.BorderColor3 = Color3.fromRGB(5, 54, 189)
+Label.Position = UDim2.new(0, 0, 0.607874036, 0)
+Label.Size = UDim2.new(0, 501, 0, 39)
+Label.Font = Enum.Font.SourceSans
+Label.Text = CLAUGUI
+Label.TextColor3 = Color3.fromRGB(0, 0, 0)
+Label.TextSize = 54.000
+
+NOCLIP.Name = NOCLIP
+NOCLIP.Parent = ScreenGui
+NOCLIP.BackgroundColor3 = Color3.fromRGB(0, 31, 204)
+NOCLIP.Position = UDim2.new(-1.02445483e-08, 0, 0.686614156, 0)
+NOCLIP.Size = UDim2.new(0, 200, 0, 50)
+NOCLIP.Font = Enum.Font.PermanentMarker
+NOCLIP.Text = NOCLIP
+NOCLIP.TextColor3 = Color3.fromRGB(230, 0, 0)
+NOCLIP.TextSize = 52.000
+NOCLIP.TextStrokeColor3 = Color3.fromRGB(255, 0, 0)
+NOCLIP.MouseButton1Downconnect(function()
+    local noclipplayer = gameGetService(Players).LocalPlayer
+    local noclipmouse = noclipplayerGetMouse()
+
+    local donoclip = false
+    local noclip = false
+
+    function b_noclip(key)
+        if (key == b) then
+            if noclip == false then
+                donoclip = true
+
+                noclip = true
+            elseif noclip == true then
+                donoclip = false
+
+                noclip = false
+            end
+        end
+    end
+
+    noclipmouse.KeyDownconnect(b_noclip)
+
+    gameGetService(Players).LocalPlayer.Character.Head.Touchedconnect(function(obj)
+        if obj ~= workspace.Terrain then
+            if donoclip == true then
+                obj.CanCollide = false
+            else
+                obj.CanCollide = true
+            end
+        end
+    end)
+end)
